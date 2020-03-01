@@ -7,5 +7,6 @@ target 'TimerS' do
 
   # Pods for TimerS
 pod 'PureLayout'
-
+pod 'Firebase/Analytics'
+pod 'Firebase/Messaging'
 end
