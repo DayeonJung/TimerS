@@ -10,24 +10,28 @@ import UIKit
 import WebKit
 import PureLayout
 
+
+
 class ViewController: UIViewController {
 
     var webView:WKWebView!
 
-    let urlString: String = "https://sandykim-code.github.io/sandy-timer/"
+    let urlString: String = "https://aws-amplify.d1qy0aio3e63ai.amplifyapp.com/"
     
     var indicator: UIActivityIndicatorView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
+        URLCache.shared.removeAllCachedResponses()
         self.webView = WKWebView()
         self.view.addSubview(self.webView)
         self.webView.autoPinEdgesToSuperviewSafeArea()
 
         self.webView.navigationDelegate = self
-
+        
+        self.webView.allowsLinkPreview = false
+        
         self.webView.load(URLRequest(url: URL(string: self.urlString)!))
 
         self.indicator = UIActivityIndicatorView(forAutoLayout: ())
@@ -36,6 +40,12 @@ class ViewController: UIViewController {
         
     }
 
+}
+
+extension WKWebView {
+    override open var safeAreaInsets: UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
 }
 
 extension ViewController: WKNavigationDelegate {
