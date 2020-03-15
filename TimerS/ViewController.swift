@@ -10,23 +10,57 @@ import UIKit
 import WebKit
 import PureLayout
 import GoogleMobileAds
-
+import AVFoundation
+import AudioToolbox
 
 class ViewController: UIViewController {
 
+    enum Effect: String {
+        case vibration
+        case sound
+        case all
+    }
+    
     @IBOutlet weak var bannerView: GADBannerView!
     
     var webView:WKWebView!
 
     let urlString: String = "https://aws-amplify.d1qy0aio3e63ai.amplifyapp.com/"
+    let TIMEOUTHANDLER: String = "timeoutHandler"
     
     var indicator: UIActivityIndicatorView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        URLCache.shared.removeAllCachedResponses()
-        self.webView = WKWebView()
+
+        self.setWebView()
+        self.setBannerView()
+        self.setIndicator()
+        
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
+
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.loadBannerAd()
+    }
+    
+
+    
+    func setWebView() {
+        let contentController = WKUserContentController()
+        let config = WKWebViewConfiguration()
+        contentController.add(self, name: self.TIMEOUTHANDLER)
+        config.userContentController = contentController
+        
+
+        self.webView = WKWebView(frame: self.view.frame, configuration: config)
         self.view.addSubview(self.webView)
         self.webView.autoPinEdge(toSuperviewSafeArea: .top)
         self.webView.autoPinEdge(toSuperviewSafeArea: .left)
@@ -34,6 +68,25 @@ class ViewController: UIViewController {
         self.webView.autoPinEdge(.bottom, to: .top, of: self.bannerView)
 
         
+        self.webView.navigationDelegate = self
+        self.webView.uiDelegate = self
+        
+        self.webView.allowsLinkPreview = false
+        self.webView.configuration.preferences.javaScriptEnabled = true
+        
+        self.webView.load(URLRequest(url: URL(string: self.urlString)!))
+
+    }
+    
+    
+    func setIndicator() {
+        self.indicator = UIActivityIndicatorView(forAutoLayout: ())
+        self.view.addSubview(self.indicator!)
+        self.indicator?.autoCenterInSuperview()
+    }
+    
+    
+    func setBannerView() {
         self.bannerView.adUnitID = "ca-app-pub-8670640792248384~7346897313"
         
         #if DEBUG
@@ -41,28 +94,7 @@ class ViewController: UIViewController {
         #endif
         
         self.bannerView.rootViewController = self
-        
-        
-        self.webView.navigationDelegate = self
-        self.webView.uiDelegate = self
-
-        self.webView.configuration.preferences.javaScriptEnabled = true
-        
-        self.webView.allowsLinkPreview = false
-        
-        self.webView.load(URLRequest(url: URL(string: self.urlString)!))
-
-        self.indicator = UIActivityIndicatorView(forAutoLayout: ())
-        self.view.addSubview(self.indicator!)
-        self.indicator?.autoCenterInSuperview()
-        
     }
-
-    override func viewDidAppear(_ animated: Bool) {
-        self.loadBannerAd()
-    }
-    
-    
     
     
     func loadBannerAd() {
@@ -74,14 +106,13 @@ class ViewController: UIViewController {
             }
         }()
         let viewWidth = frame.size.width
-
         self.bannerView.adSize = GADCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(viewWidth)
-
         self.bannerView.load(GADRequest())
     }
 
     
 }
+
 
 extension WKWebView {
     override open var safeAreaInsets: UIEdgeInsets {
@@ -90,7 +121,8 @@ extension WKWebView {
 }
 
 
-extension ViewController: WKUIDelegate {
+extension ViewController: WKUIDelegate, WKScriptMessageHandler {
+    
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
         
         let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
@@ -100,6 +132,35 @@ extension ViewController: WKUIDelegate {
 
         present(alertController, animated: true, completion: nil)
     }
+    
+    
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        
+        if message.name == self.TIMEOUTHANDLER {
+            
+            let messageDatas = message.body as? [String:String]
+
+            //https://iphonedevwiki.net/index.php/AudioServices
+            if let messageData = messageDatas?.first, messageData.key == "effect" {
+                switch Effect(rawValue: messageData.value) {
+                case .sound:
+                    AudioServicesPlaySystemSound(1109)
+                    break
+                case .vibration:
+                    AudioServicesPlaySystemSound(4095)
+                    break
+                case .all:
+                    AudioServicesPlaySystemSound(1109)
+                    AudioServicesPlaySystemSound(4095)
+                default:
+                    break
+                }
+            }
+                        
+        }
+    }
+    
+    
 }
 
 
