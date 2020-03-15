@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import Firebase
+import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
@@ -24,6 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         Messaging.messaging().delegate = self
         
         Messaging.messaging().isAutoInitEnabled = true
+        
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
+
         
         if #available(iOS 10.0, *) {
           // For iOS 10 display notification (sent via APNS)

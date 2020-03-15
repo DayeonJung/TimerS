@@ -9,4 +9,6 @@ target 'TimerS' do
 pod 'PureLayout'
 pod 'Firebase/Analytics'
 pod 'Firebase/Messaging'
+pod 'Google-Mobile-Ads-SDK'
+
 end
