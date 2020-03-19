@@ -11,4 +11,6 @@ pod 'Firebase/Analytics'
 pod 'Firebase/Messaging'
 pod 'Google-Mobile-Ads-SDK'
 
+pod 'PWSwitch'
+
 end

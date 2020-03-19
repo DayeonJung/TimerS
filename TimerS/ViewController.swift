@@ -12,32 +12,55 @@ import PureLayout
 import GoogleMobileAds
 import AVFoundation
 import AudioToolbox
+import PWSwitch
 
 class ViewController: UIViewController {
 
+    enum Handler: String {
+        case timeOut = "timeoutHandler"
+        case hamburger = "hamburgerHandler"
+    }
+    
     enum Effect: String {
         case vibration
         case sound
         case all
     }
     
+    @IBOutlet weak var hamburgerView: UIView!
     @IBOutlet weak var bannerView: GADBannerView!
+    
+    @IBOutlet weak var leadingConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var soundSwitch: PWSwitch!
+    
+    @IBOutlet weak var vibrationSwitch: PWSwitch!
     
     var webView:WKWebView!
 
     let urlString: String = "https://aws-amplify.d1qy0aio3e63ai.amplifyapp.com/"
-    let TIMEOUTHANDLER: String = "timeoutHandler"
     
     var indicator: UIActivityIndicatorView?
+    
+    var hamburgerVisible: Bool = true
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        self.leadingConstraint.constant = -300
 
         self.setWebView()
         self.setBannerView()
         self.setIndicator()
         
+        self.soundSwitch.tag = 0
+        self.vibrationSwitch.tag = 1
+        self.soundSwitch.addTarget(self, action: #selector(self.switchValueDidChange), for: .valueChanged)
+        self.vibrationSwitch.addTarget(self, action: #selector(self.switchValueDidChange), for: .valueChanged)
+
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,11 +75,12 @@ class ViewController: UIViewController {
     }
     
 
-    
     func setWebView() {
         let contentController = WKUserContentController()
         let config = WKWebViewConfiguration()
-        contentController.add(self, name: self.TIMEOUTHANDLER)
+        
+        contentController.add(self, name: Handler.timeOut.rawValue)
+        contentController.add(self, name: Handler.hamburger.rawValue)
         config.userContentController = contentController
         
 
@@ -122,7 +146,7 @@ extension WKWebView {
 
 
 extension ViewController: WKUIDelegate, WKScriptMessageHandler {
-    
+
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
         
         let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
@@ -136,30 +160,82 @@ extension ViewController: WKUIDelegate, WKScriptMessageHandler {
     
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         
-        if message.name == self.TIMEOUTHANDLER {
-            
-            let messageDatas = message.body as? [String:String]
+        let soundState = UserDefaults.standard.bool(forKey: "soundSwitchState")
+        let vibState = UserDefaults.standard.bool(forKey: "vibrationSwitchState")
 
+        if message.name == Handler.timeOut.rawValue {
+            
             //https://iphonedevwiki.net/index.php/AudioServices
-            if let messageData = messageDatas?.first, messageData.key == "effect" {
-                switch Effect(rawValue: messageData.value) {
-                case .sound:
-                    AudioServicesPlaySystemSound(1109)
-                    break
-                case .vibration:
-                    AudioServicesPlaySystemSound(4095)
-                    break
-                case .all:
-                    AudioServicesPlaySystemSound(1109)
-                    AudioServicesPlaySystemSound(4095)
-                default:
-                    break
-                }
+            if soundState && vibState {
+                AudioServicesPlaySystemSound(1109)
+                AudioServicesPlaySystemSound(4095)
+            } else if soundState && !vibState {
+                AudioServicesPlaySystemSound(1109)
+            } else if !soundState && vibState {
+                AudioServicesPlaySystemSound(4095)
             }
                         
+        } else if message.name == Handler.hamburger.rawValue {
+            self.view.bringSubviewToFront(self.hamburgerView)
+
+            if !self.hamburgerVisible {
+                self.leadingConstraint.constant = -300
+                self.hamburgerVisible = true
+            } else {
+                self.leadingConstraint.constant = 0
+                self.hamburgerVisible = false
+                
+                
+                self.soundSwitch.setOn(soundState, animated: true)
+                self.vibrationSwitch.setOn(vibState, animated: true)
+                                
+                let button = NBButton(forAutoLayout: ())
+                button.cornerRadius = 0
+                button.backgroundColor = UIColor(red: 51/255, green: 51/255, blue: 51/255, alpha: 0.7)
+                
+                button.onClick = {
+                    self.leadingConstraint.constant = -300
+                    self.hamburgerVisible = true
+                    
+                    button.removeFromSuperview()
+                    
+                    UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseIn, animations: {
+                        self.view.layoutIfNeeded()
+                    }) { (completed) in
+                        print("completed")
+                    }
+                }
+                
+                self.view.addSubview(button)
+                button.autoSetDimensions(to: CGSize(width: UIScreen.main.bounds.width-300, height: self.view.frame.height))
+                button.autoPinEdge(.left, to: .right, of: self.hamburgerView)
+                button.autoPinEdge(.top, to: .top, of: self.hamburgerView)
+                button.autoPinEdge(.bottom, to: .bottom, of: self.hamburgerView)
+
+            }
+            
+            UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseIn, animations: {
+                self.view.layoutIfNeeded()
+            }) { (completed) in
+                print("completed")
+            }
         }
+        
+        
     }
     
+    
+    @objc func switchValueDidChange(sender: PWSwitch!) {
+        
+        if sender.tag == 0 {
+            UserDefaults.standard.set(sender.on, forKey: "soundSwitchState")
+        } else if sender.tag == 1 {
+            UserDefaults.standard.set(sender.on, forKey: "vibrationSwitchState")
+            
+        }
+        
+
+    }
     
 }
 

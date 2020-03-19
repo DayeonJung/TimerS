@@ -81,12 +81,14 @@ PODS:
   - nanopb/encode (0.3.9011)
   - Protobuf (3.11.2)
   - PureLayout (3.1.5)
+  - PWSwitch (1.1.3)
 
 DEPENDENCIES:
   - Firebase/Analytics
   - Firebase/Messaging
   - Google-Mobile-Ads-SDK
   - PureLayout
+  - PWSwitch
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -106,6 +108,7 @@ SPEC REPOS:
     - nanopb
     - Protobuf
     - PureLayout
+    - PWSwitch
 
 SPEC CHECKSUMS:
   Firebase: 0219bb4782eb1406f1b9b0628a2e625484ce910d
@@ -124,7 +127,8 @@ SPEC CHECKSUMS:
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   Protobuf: dd1aaea7140debfe4dd0683fb8ef208e527ae153
   PureLayout: 9b4ad47b2f0388c84ff534af23d96e720c1b875a
+  PWSwitch: e20b0dcda15349bb61270a8c5cb6b2196dc440fa
 
-PODFILE CHECKSUM: edbbb1942c00897bd4fcb3617a7f4339813b886c
+PODFILE CHECKSUM: 2702be0d382ccbd9f29561f9ae9780e074a5e15f
 
 COCOAPODS: 1.7.1
