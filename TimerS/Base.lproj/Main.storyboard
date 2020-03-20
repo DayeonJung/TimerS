@@ -79,12 +79,15 @@
                                         <attributedString key="attributedText">
                                             <fragment>
                                                 <string key="content">TimerS for nolbal family
-Ver 1.0.0
+Ver 1.0.2
 designed by SSO
-developed by SandyKim</string>
+developed by SandyKim
+released by Dayeon</string>
                                                 <attributes>
-                                                    <font key="NSFont" size="12" name="Helvetica"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
                                                 </attributes>
                                             </fragment>
                                         </attributedString>

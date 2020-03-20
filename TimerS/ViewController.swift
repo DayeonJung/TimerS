@@ -19,6 +19,7 @@ class ViewController: UIViewController {
     enum Handler: String {
         case timeOut = "timeoutHandler"
         case hamburger = "hamburgerHandler"
+        case interstitial = "interstitialHandler"
     }
     
     enum Effect: String {
@@ -40,10 +41,15 @@ class ViewController: UIViewController {
 
     let urlString: String = "https://aws-amplify.d1qy0aio3e63ai.amplifyapp.com/"
     
+    let adUnitID: String = "ca-app-pub-8670640792248384~7346897313"
+    let testUnitID: String = "ca-app-pub-3940256099942544/4411468910"
+    
     var indicator: UIActivityIndicatorView?
     
     var hamburgerVisible: Bool = true
     
+    var interstitial: GADInterstitial!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +66,9 @@ class ViewController: UIViewController {
         self.soundSwitch.addTarget(self, action: #selector(self.switchValueDidChange), for: .valueChanged)
         self.vibrationSwitch.addTarget(self, action: #selector(self.switchValueDidChange), for: .valueChanged)
 
+        self.interstitial = createAndLoadInterstitial()
 
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -74,6 +82,21 @@ class ViewController: UIViewController {
         self.loadBannerAd()
     }
     
+    
+    func createAndLoadInterstitial() -> GADInterstitial {
+    
+        var id = self.adUnitID
+        
+        #if DEBUG
+        id = self.testUnitID
+        #endif
+        
+        let interstitial = GADInterstitial(adUnitID: id)
+        interstitial.delegate = self
+        interstitial.load(GADRequest())
+        return interstitial
+    }
+
 
     func setWebView() {
         let contentController = WKUserContentController()
@@ -81,6 +104,8 @@ class ViewController: UIViewController {
         
         contentController.add(self, name: Handler.timeOut.rawValue)
         contentController.add(self, name: Handler.hamburger.rawValue)
+        contentController.add(self, name: Handler.interstitial.rawValue)
+
         config.userContentController = contentController
         
 
@@ -111,7 +136,7 @@ class ViewController: UIViewController {
     
     
     func setBannerView() {
-        self.bannerView.adUnitID = "ca-app-pub-8670640792248384~7346897313"
+        self.bannerView.adUnitID = self.adUnitID
         
         #if DEBUG
         self.bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
@@ -144,6 +169,14 @@ extension WKWebView {
     }
 }
 
+
+extension ViewController: GADInterstitialDelegate {
+    
+    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
+      self.interstitial = createAndLoadInterstitial()
+    }
+    
+}
 
 extension ViewController: WKUIDelegate, WKScriptMessageHandler {
 
@@ -218,6 +251,14 @@ extension ViewController: WKUIDelegate, WKScriptMessageHandler {
                 self.view.layoutIfNeeded()
             }) { (completed) in
                 print("completed")
+            }
+            
+        } else if message.name == Handler.interstitial.rawValue {
+            
+            if self.interstitial.isReady {
+                self.interstitial.present(fromRootViewController: self)
+            } else {
+              print("Ad wasn't ready")
             }
         }
         
