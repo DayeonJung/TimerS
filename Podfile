@@ -13,4 +13,6 @@ pod 'Google-Mobile-Ads-SDK'
 
 pod 'PWSwitch'
 
+pod 'LGSideMenuController'
+
 end

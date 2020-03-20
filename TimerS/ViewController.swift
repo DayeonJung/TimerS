@@ -28,16 +28,9 @@ class ViewController: UIViewController {
         case all
     }
     
-    @IBOutlet weak var hamburgerView: UIView!
-    @IBOutlet weak var bannerView: GADBannerView!
+    var bannerView: GADBannerView!
     
-    @IBOutlet weak var leadingConstraint: NSLayoutConstraint!
-    
-    @IBOutlet weak var soundSwitch: PWSwitch!
-    
-    @IBOutlet weak var vibrationSwitch: PWSwitch!
-    
-    var webView:WKWebView!
+    var webView: WKWebView?
 
     let urlString: String = "https://aws-amplify.d1qy0aio3e63ai.amplifyapp.com/"
     
@@ -55,31 +48,48 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        self.leadingConstraint.constant = -300
+//        self.leadingConstraint.constant = -300
 
-        self.setWebView()
-        self.setBannerView()
         self.setIndicator()
         
-        self.soundSwitch.tag = 0
-        self.vibrationSwitch.tag = 1
-        self.soundSwitch.addTarget(self, action: #selector(self.switchValueDidChange), for: .valueChanged)
-        self.vibrationSwitch.addTarget(self, action: #selector(self.switchValueDidChange), for: .valueChanged)
+//        self.soundSwitch.tag = 0
+//        self.vibrationSwitch.tag = 1
+//        self.soundSwitch.addTarget(self, action: #selector(self.switchValueDidChange), for: .valueChanged)
+//        self.vibrationSwitch.addTarget(self, action: #selector(self.switchValueDidChange), for: .valueChanged)
 
+        self.setBannerView()
+        
         self.interstitial = createAndLoadInterstitial()
 
         
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
     
-    override func viewDidAppear(_ animated: Bool) {
-        self.loadBannerAd()
+    
+    func addBannerViewToView(_ bannerView: GADBannerView) {
+     bannerView.translatesAutoresizingMaskIntoConstraints = false
+     view.addSubview(bannerView)
+     view.addConstraints(
+       [NSLayoutConstraint(item: bannerView,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: bottomLayoutGuide,
+                           attribute: .top,
+                           multiplier: 1,
+                           constant: 0),
+        NSLayoutConstraint(item: bannerView,
+                           attribute: .centerX,
+                           relatedBy: .equal,
+                           toItem: view,
+                           attribute: .centerX,
+                           multiplier: 1,
+                           constant: 0)
+       ])
     }
     
     
@@ -110,20 +120,20 @@ class ViewController: UIViewController {
         
 
         self.webView = WKWebView(frame: self.view.frame, configuration: config)
-        self.view.addSubview(self.webView)
-        self.webView.autoPinEdge(toSuperviewSafeArea: .top)
-        self.webView.autoPinEdge(toSuperviewSafeArea: .left)
-        self.webView.autoPinEdge(toSuperviewSafeArea: .right)
-        self.webView.autoPinEdge(.bottom, to: .top, of: self.bannerView)
+        self.view.addSubview(self.webView!)
+        self.webView!.autoPinEdge(toSuperviewSafeArea: .top)
+        self.webView!.autoPinEdge(toSuperviewSafeArea: .left)
+        self.webView!.autoPinEdge(toSuperviewSafeArea: .right)
+        self.webView!.autoPinEdge(.bottom, to: .top, of: self.bannerView)
 
         
-        self.webView.navigationDelegate = self
-        self.webView.uiDelegate = self
+        self.webView!.navigationDelegate = self
+        self.webView!.uiDelegate = self
         
-        self.webView.allowsLinkPreview = false
-        self.webView.configuration.preferences.javaScriptEnabled = true
+        self.webView!.allowsLinkPreview = false
+        self.webView!.configuration.preferences.javaScriptEnabled = true
         
-        self.webView.load(URLRequest(url: URL(string: self.urlString)!))
+        self.webView!.load(URLRequest(url: URL(string: self.urlString)!))
 
     }
     
@@ -136,29 +146,20 @@ class ViewController: UIViewController {
     
     
     func setBannerView() {
+        bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+
         self.bannerView.adUnitID = self.adUnitID
         
         #if DEBUG
         self.bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
         #endif
         
-        self.bannerView.rootViewController = self
-    }
-    
-    
-    func loadBannerAd() {
-        let frame = { () -> CGRect in
-            if #available(iOS 11.0, *) {
-                return view.frame.inset(by: view.safeAreaInsets)
-            } else {
-                return view.frame
-            }
-        }()
-        let viewWidth = frame.size.width
-        self.bannerView.adSize = GADCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(viewWidth)
-        self.bannerView.load(GADRequest())
-    }
+        bannerView.delegate = self
 
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
+        
+    }
     
 }
 
@@ -167,6 +168,23 @@ extension WKWebView {
     override open var safeAreaInsets: UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
+}
+
+extension ViewController: GADBannerViewDelegate {
+    func adViewDidReceiveAd(_ bannerView: GADBannerView) {
+      // Add banner to view and add constraints as above.
+        self.addBannerViewToView(bannerView)
+        
+        if self.webView == nil {
+            self.setWebView()
+        }
+        
+        bannerView.alpha = 0
+        UIView.animate(withDuration: 1, animations: {
+          bannerView.alpha = 1
+        })
+    }
+
 }
 
 
@@ -209,49 +227,50 @@ extension ViewController: WKUIDelegate, WKScriptMessageHandler {
             }
                         
         } else if message.name == Handler.hamburger.rawValue {
-            self.view.bringSubviewToFront(self.hamburgerView)
-
-            if !self.hamburgerVisible {
-                self.leadingConstraint.constant = -300
-                self.hamburgerVisible = true
-            } else {
-                self.leadingConstraint.constant = 0
-                self.hamburgerVisible = false
-                
-                
-                self.soundSwitch.setOn(soundState, animated: true)
-                self.vibrationSwitch.setOn(vibState, animated: true)
-                                
-                let button = NBButton(forAutoLayout: ())
-                button.cornerRadius = 0
-                button.backgroundColor = UIColor(red: 51/255, green: 51/255, blue: 51/255, alpha: 0.7)
-                
-                button.onClick = {
-                    self.leadingConstraint.constant = -300
-                    self.hamburgerVisible = true
-                    
-                    button.removeFromSuperview()
-                    
-                    UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseIn, animations: {
-                        self.view.layoutIfNeeded()
-                    }) { (completed) in
-                        print("completed")
-                    }
-                }
-                
-                self.view.addSubview(button)
-                button.autoSetDimensions(to: CGSize(width: UIScreen.main.bounds.width-300, height: self.view.frame.height))
-                button.autoPinEdge(.left, to: .right, of: self.hamburgerView)
-                button.autoPinEdge(.top, to: .top, of: self.hamburgerView)
-                button.autoPinEdge(.bottom, to: .bottom, of: self.hamburgerView)
-
-            }
             
-            UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseIn, animations: {
-                self.view.layoutIfNeeded()
-            }) { (completed) in
-                print("completed")
-            }
+//            self.view.bringSubviewToFront(self.hamburgerView)
+//
+//            if !self.hamburgerVisible {
+//                self.leadingConstraint.constant = -300
+//                self.hamburgerVisible = true
+//            } else {
+//                self.leadingConstraint.constant = 0
+//                self.hamburgerVisible = false
+//
+//
+//                self.soundSwitch.setOn(soundState, animated: true)
+//                self.vibrationSwitch.setOn(vibState, animated: true)
+//
+//                let button = NBButton(forAutoLayout: ())
+//                button.cornerRadius = 0
+//                button.backgroundColor = UIColor(red: 51/255, green: 51/255, blue: 51/255, alpha: 0.7)
+//
+//                button.onClick = {
+//                    self.leadingConstraint.constant = -300
+//                    self.hamburgerVisible = true
+//
+//                    button.removeFromSuperview()
+//
+//                    UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseIn, animations: {
+//                        self.view.layoutIfNeeded()
+//                    }) { (completed) in
+//                        print("completed")
+//                    }
+//                }
+//
+//                self.view.addSubview(button)
+//                button.autoSetDimensions(to: CGSize(width: UIScreen.main.bounds.width-300, height: self.view.frame.height))
+//                button.autoPinEdge(.left, to: .right, of: self.hamburgerView)
+//                button.autoPinEdge(.top, to: .top, of: self.hamburgerView)
+//                button.autoPinEdge(.bottom, to: .bottom, of: self.hamburgerView)
+
+//            }
+//
+//            UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseIn, animations: {
+//                self.view.layoutIfNeeded()
+//            }) { (completed) in
+//                print("completed")
+//            }
             
         } else if message.name == Handler.interstitial.rawValue {
             
