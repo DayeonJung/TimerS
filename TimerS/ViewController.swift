@@ -14,6 +14,11 @@ import AVFoundation
 import AudioToolbox
 import PWSwitch
 
+enum UserDefaultKey: String {
+    case sound = "soundSwitchState"
+    case vibration = "vibrationSwitchState"
+}
+
 class ViewController: UIViewController {
 
     enum Handler: String {
@@ -39,8 +44,6 @@ class ViewController: UIViewController {
     
     var indicator: UIActivityIndicatorView?
     
-    var hamburgerVisible: Bool = true
-    
     var interstitial: GADInterstitial!
 
     
@@ -48,15 +51,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-//        self.leadingConstraint.constant = -300
-
         self.setIndicator()
         
-//        self.soundSwitch.tag = 0
-//        self.vibrationSwitch.tag = 1
-//        self.soundSwitch.addTarget(self, action: #selector(self.switchValueDidChange), for: .valueChanged)
-//        self.vibrationSwitch.addTarget(self, action: #selector(self.switchValueDidChange), for: .valueChanged)
-
+        
         self.setBannerView()
         
         self.interstitial = createAndLoadInterstitial()
@@ -72,24 +69,12 @@ class ViewController: UIViewController {
     
     
     func addBannerViewToView(_ bannerView: GADBannerView) {
-     bannerView.translatesAutoresizingMaskIntoConstraints = false
-     view.addSubview(bannerView)
-     view.addConstraints(
-       [NSLayoutConstraint(item: bannerView,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: bottomLayoutGuide,
-                           attribute: .top,
-                           multiplier: 1,
-                           constant: 0),
-        NSLayoutConstraint(item: bannerView,
-                           attribute: .centerX,
-                           relatedBy: .equal,
-                           toItem: view,
-                           attribute: .centerX,
-                           multiplier: 1,
-                           constant: 0)
-       ])
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bannerView)
+        view.addConstraints(
+            [NSLayoutConstraint(item: bannerView, attribute: .bottom, relatedBy: .equal, toItem: bottomLayoutGuide, attribute: .top, multiplier: 1, constant: 0),
+             NSLayoutConstraint(item: bannerView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0)
+        ])
     }
     
     
@@ -118,23 +103,22 @@ class ViewController: UIViewController {
 
         config.userContentController = contentController
         
-
         self.webView = WKWebView(frame: self.view.frame, configuration: config)
-        self.view.addSubview(self.webView!)
-        self.webView!.autoPinEdge(toSuperviewSafeArea: .top)
-        self.webView!.autoPinEdge(toSuperviewSafeArea: .left)
-        self.webView!.autoPinEdge(toSuperviewSafeArea: .right)
-        self.webView!.autoPinEdge(.bottom, to: .top, of: self.bannerView)
+        if let webView = self.webView {
+            self.view.addSubview(webView)
+            webView.autoPinEdge(toSuperviewSafeArea: .top)
+            webView.autoPinEdge(toSuperviewSafeArea: .left)
+            webView.autoPinEdge(toSuperviewSafeArea: .right)
+            webView.autoPinEdge(.bottom, to: .top, of: self.bannerView)
 
-        
-        self.webView!.navigationDelegate = self
-        self.webView!.uiDelegate = self
-        
-        self.webView!.allowsLinkPreview = false
-        self.webView!.configuration.preferences.javaScriptEnabled = true
-        
-        self.webView!.load(URLRequest(url: URL(string: self.urlString)!))
-
+            webView.navigationDelegate = self
+            webView.uiDelegate = self
+            
+            webView.allowsLinkPreview = false
+            webView.configuration.preferences.javaScriptEnabled = true
+            
+            webView.load(URLRequest(url: URL(string: self.urlString)!))
+        }
     }
     
     
@@ -172,7 +156,7 @@ extension WKWebView {
 
 extension ViewController: GADBannerViewDelegate {
     func adViewDidReceiveAd(_ bannerView: GADBannerView) {
-      // Add banner to view and add constraints as above.
+        // Add banner to view and add constraints as above.
         self.addBannerViewToView(bannerView)
         
         if self.webView == nil {
@@ -211,8 +195,8 @@ extension ViewController: WKUIDelegate, WKScriptMessageHandler {
     
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         
-        let soundState = UserDefaults.standard.bool(forKey: "soundSwitchState")
-        let vibState = UserDefaults.standard.bool(forKey: "vibrationSwitchState")
+        let soundState = UserDefaults.standard.bool(forKey: UserDefaultKey.sound.rawValue)
+        let vibState = UserDefaults.standard.bool(forKey: UserDefaultKey.vibration.rawValue)
 
         if message.name == Handler.timeOut.rawValue {
             
@@ -228,49 +212,7 @@ extension ViewController: WKUIDelegate, WKScriptMessageHandler {
                         
         } else if message.name == Handler.hamburger.rawValue {
             
-//            self.view.bringSubviewToFront(self.hamburgerView)
-//
-//            if !self.hamburgerVisible {
-//                self.leadingConstraint.constant = -300
-//                self.hamburgerVisible = true
-//            } else {
-//                self.leadingConstraint.constant = 0
-//                self.hamburgerVisible = false
-//
-//
-//                self.soundSwitch.setOn(soundState, animated: true)
-//                self.vibrationSwitch.setOn(vibState, animated: true)
-//
-//                let button = NBButton(forAutoLayout: ())
-//                button.cornerRadius = 0
-//                button.backgroundColor = UIColor(red: 51/255, green: 51/255, blue: 51/255, alpha: 0.7)
-//
-//                button.onClick = {
-//                    self.leadingConstraint.constant = -300
-//                    self.hamburgerVisible = true
-//
-//                    button.removeFromSuperview()
-//
-//                    UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseIn, animations: {
-//                        self.view.layoutIfNeeded()
-//                    }) { (completed) in
-//                        print("completed")
-//                    }
-//                }
-//
-//                self.view.addSubview(button)
-//                button.autoSetDimensions(to: CGSize(width: UIScreen.main.bounds.width-300, height: self.view.frame.height))
-//                button.autoPinEdge(.left, to: .right, of: self.hamburgerView)
-//                button.autoPinEdge(.top, to: .top, of: self.hamburgerView)
-//                button.autoPinEdge(.bottom, to: .bottom, of: self.hamburgerView)
-
-//            }
-//
-//            UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseIn, animations: {
-//                self.view.layoutIfNeeded()
-//            }) { (completed) in
-//                print("completed")
-//            }
+            sideMenuController?.showLeftView(animated: true, completionHandler: nil)
             
         } else if message.name == Handler.interstitial.rawValue {
             
@@ -283,19 +225,7 @@ extension ViewController: WKUIDelegate, WKScriptMessageHandler {
         
         
     }
-    
-    
-    @objc func switchValueDidChange(sender: PWSwitch!) {
-        
-        if sender.tag == 0 {
-            UserDefaults.standard.set(sender.on, forKey: "soundSwitchState")
-        } else if sender.tag == 1 {
-            UserDefaults.standard.set(sender.on, forKey: "vibrationSwitchState")
-            
-        }
-        
 
-    }
     
 }
 

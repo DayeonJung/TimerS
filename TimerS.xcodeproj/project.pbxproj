@@ -8,8 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		327D0EFB0CF0BCB893AFF929 /* Pods_TimerS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8365B4859D2E465EDEDDE5F3 /* Pods_TimerS.framework */; };
-		B4C2484A24238C90007EE951 /* HamburgerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4C2484924238C90007EE951 /* HamburgerView.xib */; };
-		B4C2484C24238CBA007EE951 /* HamburgerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C2484B24238CBA007EE951 /* HamburgerView.swift */; };
+		B463C71524254EF1000A643F /* HamburgerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B463C71424254EF1000A643F /* HamburgerViewController.swift */; };
 		B4C2484E24239A36007EE951 /* NBButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C2484D24239A36007EE951 /* NBButton.swift */; };
 		B4FBA504240B9BAD008A3B25 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B4FBA503240B9BAD008A3B25 /* GoogleService-Info.plist */; };
 		B4FCE7E523E9A19000E834E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FCE7E423E9A19000E834E3 /* AppDelegate.swift */; };
@@ -18,14 +17,14 @@
 		B4FCE7EF23E9A19000E834E3 /* TimerS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B4FCE7ED23E9A19000E834E3 /* TimerS.xcdatamodeld */; };
 		B4FCE7F123E9A19100E834E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4FCE7F023E9A19100E834E3 /* Assets.xcassets */; };
 		B4FCE7F423E9A19100E834E3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4FCE7F223E9A19100E834E3 /* LaunchScreen.storyboard */; };
+		B4FD51DF2425F39F008966A9 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD51DE2425F39F008966A9 /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		37E262DBA3E8F32DBF3704F8 /* Pods-TimerS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimerS.release.xcconfig"; path = "Target Support Files/Pods-TimerS/Pods-TimerS.release.xcconfig"; sourceTree = "<group>"; };
 		8365B4859D2E465EDEDDE5F3 /* Pods_TimerS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TimerS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B463C71424254EF1000A643F /* HamburgerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HamburgerViewController.swift; sourceTree = "<group>"; };
 		B471B90C240BAA68004B78E9 /* TimerS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TimerS.entitlements; sourceTree = "<group>"; };
-		B4C2484924238C90007EE951 /* HamburgerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HamburgerView.xib; sourceTree = "<group>"; };
-		B4C2484B24238CBA007EE951 /* HamburgerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HamburgerView.swift; sourceTree = "<group>"; };
 		B4C2484D24239A36007EE951 /* NBButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NBButton.swift; sourceTree = "<group>"; };
 		B4FBA503240B9BAD008A3B25 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B4FCE7E123E9A19000E834E3 /* TimerS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimerS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -36,6 +35,7 @@
 		B4FCE7F023E9A19100E834E3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B4FCE7F323E9A19100E834E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B4FCE7F523E9A19100E834E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B4FD51DE2425F39F008966A9 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		E9B16DA5ED1BB6BC7BA72D02 /* Pods-TimerS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimerS.debug.xcconfig"; path = "Target Support Files/Pods-TimerS/Pods-TimerS.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -81,18 +81,18 @@
 		B4FCE7E323E9A19000E834E3 /* TimerS */ = {
 			isa = PBXGroup;
 			children = (
-				B4C2484D24239A36007EE951 /* NBButton.swift */,
 				B471B90C240BAA68004B78E9 /* TimerS.entitlements */,
+				B4C2484D24239A36007EE951 /* NBButton.swift */,
 				B4FCE7E423E9A19000E834E3 /* AppDelegate.swift */,
 				B4FCE7E823E9A19000E834E3 /* ViewController.swift */,
+				B4FD51DE2425F39F008966A9 /* MainViewController.swift */,
+				B463C71424254EF1000A643F /* HamburgerViewController.swift */,
 				B4FCE7EA23E9A19000E834E3 /* Main.storyboard */,
 				B4FCE7F023E9A19100E834E3 /* Assets.xcassets */,
 				B4FCE7F223E9A19100E834E3 /* LaunchScreen.storyboard */,
-				B4FCE7F523E9A19100E834E3 /* Info.plist */,
 				B4FCE7ED23E9A19000E834E3 /* TimerS.xcdatamodeld */,
+				B4FCE7F523E9A19100E834E3 /* Info.plist */,
 				B4FBA503240B9BAD008A3B25 /* GoogleService-Info.plist */,
-				B4C2484924238C90007EE951 /* HamburgerView.xib */,
-				B4C2484B24238CBA007EE951 /* HamburgerView.swift */,
 			);
 			path = TimerS;
 			sourceTree = "<group>";
@@ -165,7 +165,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B4C2484A24238C90007EE951 /* HamburgerView.xib in Resources */,
 				B4FCE7F423E9A19100E834E3 /* LaunchScreen.storyboard in Resources */,
 				B4FBA504240B9BAD008A3B25 /* GoogleService-Info.plist in Resources */,
 				B4FCE7F123E9A19100E834E3 /* Assets.xcassets in Resources */,
@@ -222,10 +221,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B463C71524254EF1000A643F /* HamburgerViewController.swift in Sources */,
 				B4C2484E24239A36007EE951 /* NBButton.swift in Sources */,
 				B4FCE7E923E9A19000E834E3 /* ViewController.swift in Sources */,
+				B4FD51DF2425F39F008966A9 /* MainViewController.swift in Sources */,
 				B4FCE7E523E9A19000E834E3 /* AppDelegate.swift in Sources */,
-				B4C2484C24238CBA007EE951 /* HamburgerView.swift in Sources */,
 				B4FCE7EF23E9A19000E834E3 /* TimerS.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -408,7 +408,7 @@
 				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ios.TimerS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = provisioningProfile_timerS;
+				PROVISIONING_PROFILE_SPECIFIER = appStore_timerS;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

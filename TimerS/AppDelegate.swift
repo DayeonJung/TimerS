@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import Firebase
 import GoogleMobileAds
+import LGSideMenuController
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
@@ -46,6 +47,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         application.registerForRemoteNotifications()
 
         
+        let viewController = ViewController()
+        let navigationController = UINavigationController(rootViewController: viewController)
+        navigationController.setNavigationBarHidden(true, animated: false)
+        
+        let mainViewController = MainViewController()
+        mainViewController.rootViewController = navigationController
+        mainViewController.setup()
+        
+        window?.rootViewController = mainViewController
+
+        UIView.transition(with: window ?? UIWindow(), duration: 0.3, options: [.transitionCrossDissolve], animations: nil, completion: nil)
+
         
         return true
     }
