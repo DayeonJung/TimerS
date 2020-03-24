@@ -39,8 +39,10 @@ class ViewController: UIViewController {
 
     let urlString: String = "https://aws-amplify.d1qy0aio3e63ai.amplifyapp.com/"
     
-    let adUnitID: String = "ca-app-pub-8670640792248384~7346897313"
-    let testUnitID: String = "ca-app-pub-3940256099942544/4411468910"
+    let interAdUnitID: String = "ca-app-pub-8670640792248384/9329416028"
+    let bannerAdUnitID: String = "ca-app-pub-8670640792248384/2832937234"
+    let testInterID: String = "ca-app-pub-3940256099942544/4411468910"
+    let testBannerID: String = "ca-app-pub-3940256099942544/2934735716"
     
     var indicator: UIActivityIndicatorView?
     
@@ -52,7 +54,6 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         self.setIndicator()
-        
         
         self.setBannerView()
         
@@ -80,10 +81,10 @@ class ViewController: UIViewController {
     
     func createAndLoadInterstitial() -> GADInterstitial {
     
-        var id = self.adUnitID
+        var id = self.interAdUnitID
         
         #if DEBUG
-        id = self.testUnitID
+        id = self.testInterID
         #endif
         
         let interstitial = GADInterstitial(adUnitID: id)
@@ -132,10 +133,10 @@ class ViewController: UIViewController {
     func setBannerView() {
         bannerView = GADBannerView(adSize: kGADAdSizeBanner)
 
-        self.bannerView.adUnitID = self.adUnitID
+        self.bannerView.adUnitID = self.bannerAdUnitID
         
         #if DEBUG
-        self.bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        self.bannerView.adUnitID = self.testBannerID
         #endif
         
         bannerView.delegate = self
