@@ -54,7 +54,7 @@ class HamburgerViewController: UIViewController {
         self.lbTitle.autoAlignAxis(.vertical, toSameAxisOf: ImgViewLogo)
         
         
-        self.lbAppInfo.text = "TimerS for nolbal family\nVer 1.0.0\ndesigned by SSO\ndeveloped by SandyKim\nreleased by Dayeon"
+        self.lbAppInfo.text = "TimerS for nolbal family\nVer 1.0.2\ndesigned by SSO\ndeveloped by SandyKim\nreleased by Dayeon"
         self.lbAppInfo.numberOfLines = 0
         self.lbAppInfo.textColor = .white
         self.lbAppInfo.font = UIFont(name: "Helvetica", size: 12)
