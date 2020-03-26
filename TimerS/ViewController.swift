@@ -34,6 +34,7 @@ class ViewController: UIViewController {
     }
     
     var bannerView: GADBannerView!
+    var bannerContainer: UIView?
     
     var webView: WKWebView?
 
@@ -48,14 +49,16 @@ class ViewController: UIViewController {
     
     var interstitial: GADInterstitial!
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
         self.setIndicator()
-        
+
         self.setBannerView()
+        
+        self.setWebView()
+
         
         self.interstitial = createAndLoadInterstitial()
 
@@ -68,15 +71,6 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
-    func addBannerViewToView(_ bannerView: GADBannerView) {
-        bannerView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(bannerView)
-        view.addConstraints(
-            [NSLayoutConstraint(item: bannerView, attribute: .bottom, relatedBy: .equal, toItem: bottomLayoutGuide, attribute: .top, multiplier: 1, constant: 0),
-             NSLayoutConstraint(item: bannerView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0)
-        ])
-    }
     
     
     func createAndLoadInterstitial() -> GADInterstitial {
@@ -105,12 +99,12 @@ class ViewController: UIViewController {
         config.userContentController = contentController
         
         self.webView = WKWebView(frame: self.view.frame, configuration: config)
-        if let webView = self.webView {
+        if let webView = self.webView, let banner = self.bannerContainer {
             self.view.addSubview(webView)
             webView.autoPinEdge(toSuperviewSafeArea: .top)
             webView.autoPinEdge(toSuperviewSafeArea: .left)
             webView.autoPinEdge(toSuperviewSafeArea: .right)
-            webView.autoPinEdge(.bottom, to: .top, of: self.bannerView)
+            webView.autoPinEdge(.bottom, to: .top, of: banner)
 
             webView.navigationDelegate = self
             webView.uiDelegate = self
@@ -131,7 +125,17 @@ class ViewController: UIViewController {
     
     
     func setBannerView() {
-        bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+        
+        self.bannerContainer = UIView(forAutoLayout: ())
+        if let bannerContainer = self.bannerContainer {
+            self.view.addSubview(bannerContainer)
+            bannerContainer.autoPinEdge(toSuperviewMargin: .bottom)
+            bannerContainer.autoPinEdge(toSuperviewMargin: .right)
+            bannerContainer.autoPinEdge(toSuperviewMargin: .left)
+            bannerContainer.autoSetDimension(.height, toSize: 50)
+        }
+        
+        self.bannerView = GADBannerView(adSize: kGADAdSizeBanner)
 
         self.bannerView.adUnitID = self.bannerAdUnitID
         
@@ -139,10 +143,10 @@ class ViewController: UIViewController {
         self.bannerView.adUnitID = self.testBannerID
         #endif
         
-        bannerView.delegate = self
+        self.bannerView.delegate = self
 
-        bannerView.rootViewController = self
-        bannerView.load(GADRequest())
+        self.bannerView.rootViewController = self
+        self.bannerView.load(GADRequest())
         
     }
     
@@ -158,12 +162,10 @@ extension WKWebView {
 extension ViewController: GADBannerViewDelegate {
     func adViewDidReceiveAd(_ bannerView: GADBannerView) {
         // Add banner to view and add constraints as above.
-        self.addBannerViewToView(bannerView)
-        
-        if self.webView == nil {
-            self.setWebView()
+
+        if let banner = self.bannerContainer {
+            banner.addSubview(self.bannerView)
         }
-        
         bannerView.alpha = 0
         UIView.animate(withDuration: 1, animations: {
           bannerView.alpha = 1
