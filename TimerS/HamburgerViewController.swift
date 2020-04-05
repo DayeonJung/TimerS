@@ -53,8 +53,8 @@ class HamburgerViewController: UIViewController {
         self.lbTitle.autoPinEdge(.top, to: .bottom, of: ImgViewLogo, withOffset: 10)
         self.lbTitle.autoAlignAxis(.vertical, toSameAxisOf: ImgViewLogo)
         
-        
-        self.lbAppInfo.text = "TimerS for nolbal family\nVer 1.0.2\ndesigned by SSO\ndeveloped by SandyKim\nreleased by Dayeon"
+        let ver = Bundle.main.infoDictionary!["CFBundleShortVersionString"]! as? String
+        self.lbAppInfo.text = "TimerS for nolbal family\nVer " + (ver ?? "") + "\ndesigned by SSO\ndeveloped by Sandy Kim\nreleased by Dayeon"
         self.lbAppInfo.numberOfLines = 0
         self.lbAppInfo.textColor = .white
         self.lbAppInfo.font = UIFont(name: "Helvetica", size: 12)
@@ -69,7 +69,7 @@ class HamburgerViewController: UIViewController {
     func setSwitchUI() {
         
         let lbSound = UILabel(forAutoLayout: ())
-        lbSound.text = "사운드"
+        lbSound.text = "Sound"
         lbSound.textColor = .white
         lbSound.font = UIFont(name: "Helvetica", size: 16)
         self.view.addSubview(lbSound)
@@ -79,7 +79,7 @@ class HamburgerViewController: UIViewController {
         
         
         let lbVibration = UILabel(forAutoLayout: ())
-        lbVibration.text = "진동"
+        lbVibration.text = "Vibration"
         lbVibration.textColor = .white
         lbVibration.font = UIFont(name: "Helvetica", size: 16)
         self.view.addSubview(lbVibration)
