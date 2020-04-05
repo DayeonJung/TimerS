@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		327D0EFB0CF0BCB893AFF929 /* Pods_TimerS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8365B4859D2E465EDEDDE5F3 /* Pods_TimerS.framework */; };
+		B43467A4243A189800E08B72 /* alert.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B43467A3243A189800E08B72 /* alert.mp3 */; };
 		B463C71524254EF1000A643F /* HamburgerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B463C71424254EF1000A643F /* HamburgerViewController.swift */; };
 		B4C2484E24239A36007EE951 /* NBButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C2484D24239A36007EE951 /* NBButton.swift */; };
 		B4FBA504240B9BAD008A3B25 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B4FBA503240B9BAD008A3B25 /* GoogleService-Info.plist */; };
@@ -23,6 +24,7 @@
 /* Begin PBXFileReference section */
 		37E262DBA3E8F32DBF3704F8 /* Pods-TimerS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimerS.release.xcconfig"; path = "Target Support Files/Pods-TimerS/Pods-TimerS.release.xcconfig"; sourceTree = "<group>"; };
 		8365B4859D2E465EDEDDE5F3 /* Pods_TimerS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TimerS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B43467A3243A189800E08B72 /* alert.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alert.mp3; sourceTree = "<group>"; };
 		B463C71424254EF1000A643F /* HamburgerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HamburgerViewController.swift; sourceTree = "<group>"; };
 		B471B90C240BAA68004B78E9 /* TimerS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TimerS.entitlements; sourceTree = "<group>"; };
 		B4C2484D24239A36007EE951 /* NBButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NBButton.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				B4FCE7ED23E9A19000E834E3 /* TimerS.xcdatamodeld */,
 				B4FCE7F523E9A19100E834E3 /* Info.plist */,
 				B4FBA503240B9BAD008A3B25 /* GoogleService-Info.plist */,
+				B43467A3243A189800E08B72 /* alert.mp3 */,
 			);
 			path = TimerS;
 			sourceTree = "<group>";
@@ -165,6 +168,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B43467A4243A189800E08B72 /* alert.mp3 in Resources */,
 				B4FCE7F423E9A19100E834E3 /* LaunchScreen.storyboard in Resources */,
 				B4FBA504240B9BAD008A3B25 /* GoogleService-Info.plist in Resources */,
 				B4FCE7F123E9A19100E834E3 /* Assets.xcassets in Resources */,

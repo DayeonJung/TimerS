@@ -19,7 +19,7 @@ enum UserDefaultKey: String {
     case vibration = "vibrationSwitchState"
 }
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, AVAudioPlayerDelegate {
 
     enum Handler: String {
         case timeOut = "timeoutHandler"
@@ -48,6 +48,8 @@ class ViewController: UIViewController {
     var indicator: UIActivityIndicatorView?
     
     var interstitial: GADInterstitial!
+
+    var alertSound: AVAudioPlayer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -202,15 +204,21 @@ extension ViewController: WKUIDelegate, WKScriptMessageHandler {
         let vibState = UserDefaults.standard.bool(forKey: UserDefaultKey.vibration.rawValue)
 
         if message.name == Handler.timeOut.rawValue {
-            
+
+
             //https://iphonedevwiki.net/index.php/AudioServices
             if soundState && vibState {
-                AudioServicesPlaySystemSound(1109)
-                AudioServicesPlaySystemSound(4095)
+                
+                self.setSound()
+                UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+                
             } else if soundState && !vibState {
-                AudioServicesPlaySystemSound(1109)
+
+                self.setSound()
+                
             } else if !soundState && vibState {
-                AudioServicesPlaySystemSound(4095)
+                UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+                
             }
                         
         } else if message.name == Handler.hamburger.rawValue {
@@ -229,7 +237,17 @@ extension ViewController: WKUIDelegate, WKScriptMessageHandler {
         
     }
 
-    
+    func setSound() {
+        let path = Bundle.main.path(forResource: "alert", ofType: "mp3")!
+        let url = URL(fileURLWithPath: path)
+
+        do {
+            self.alertSound = try AVAudioPlayer(contentsOf: url)
+            self.alertSound?.play()
+        } catch {
+            print("couldn't load file :(")
+        }
+    }
 }
 
 
