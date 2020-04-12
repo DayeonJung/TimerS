@@ -74,6 +74,7 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (6.4.0):
     - GoogleUtilities/Logger
+  - LGSideMenuController (2.1.1)
   - nanopb (0.3.9011):
     - nanopb/decode (= 0.3.9011)
     - nanopb/encode (= 0.3.9011)
@@ -87,11 +88,12 @@ DEPENDENCIES:
   - Firebase/Analytics
   - Firebase/Messaging
   - Google-Mobile-Ads-SDK
+  - LGSideMenuController
   - PureLayout
   - PWSwitch
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - Firebase
     - FirebaseAnalytics
     - FirebaseAnalyticsInterop
@@ -105,6 +107,7 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
     - GoogleUtilities
+    - LGSideMenuController
     - nanopb
     - Protobuf
     - PureLayout
@@ -124,11 +127,12 @@ SPEC CHECKSUMS:
   GoogleDataTransport: 8e9b210c97d55fbff306cc5468ff91b9cb32dcf5
   GoogleDataTransportCCTSupport: 202d7cdf9c4a7d81a2bb7f7e7e1ba6faa421b1f2
   GoogleUtilities: 29bd0d8f850efbd28cff6d99e8b7da1f8d236bcf
+  LGSideMenuController: ae40c80983ab8b8801c7cef0a6804d43aaa72d45
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   Protobuf: dd1aaea7140debfe4dd0683fb8ef208e527ae153
   PureLayout: 9b4ad47b2f0388c84ff534af23d96e720c1b875a
   PWSwitch: e20b0dcda15349bb61270a8c5cb6b2196dc440fa
 
-PODFILE CHECKSUM: 2702be0d382ccbd9f29561f9ae9780e074a5e15f
+PODFILE CHECKSUM: bb4538f29fa21a3dcc8c0c13082401f0b1f23d2f
 
-COCOAPODS: 1.7.1
+COCOAPODS: 1.9.1
