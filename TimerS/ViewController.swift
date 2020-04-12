@@ -44,7 +44,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     let bannerAdUnitID: String = "ca-app-pub-8670640792248384/2832937234"
     let testInterID: String = "ca-app-pub-3940256099942544/4411468910"
     let testBannerID: String = "ca-app-pub-3940256099942544/2934735716"
-    
+
     var indicator: UIActivityIndicatorView?
     
     var interstitial: GADInterstitial!
@@ -64,7 +64,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         
         self.interstitial = createAndLoadInterstitial()
 
-        
+         
     }
     
 
@@ -73,6 +73,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+   
     
     
     func createAndLoadInterstitial() -> GADInterstitial {
@@ -148,6 +149,21 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         self.bannerView.delegate = self
 
         self.bannerView.rootViewController = self
+        
+        
+        let frame = { () -> CGRect in
+            if #available(iOS 11.0, *) {
+                return view.frame.inset(by: view.safeAreaInsets)
+            } else {
+                return view.frame
+            }
+        }()
+        let viewWidth = frame.size.width
+
+        self.bannerView.adSize = GADCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(viewWidth)
+
+        
+        
         self.bannerView.load(GADRequest())
         
     }
@@ -210,15 +226,15 @@ extension ViewController: WKUIDelegate, WKScriptMessageHandler {
             if soundState && vibState {
                 
                 self.setSound()
-                UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
-                
+                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+
             } else if soundState && !vibState {
 
                 self.setSound()
                 
             } else if !soundState && vibState {
-                UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
-                
+                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+
             }
                         
         } else if message.name == Handler.hamburger.rawValue {
