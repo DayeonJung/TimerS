@@ -56,8 +56,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         // Do any additional setup after loading the view.
         
         self.setIndicator()
-
-        
+            
         self.setWebView()
         self.setBannerView()
 
@@ -126,18 +125,8 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     
     
     func setBannerView() {
-        
-        self.bannerContainer = UIView(forAutoLayout: ())
-        if let bannerContainer = self.bannerContainer {
-            self.view.addSubview(bannerContainer)
-            
-            bannerContainer.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), excludingEdge: .top)
-            bannerContainer.autoSetDimension(.height, toSize: 50)
-
-            
-        }
-        
-        self.bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+                    
+        self.bannerView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
 
         self.bannerView.adUnitID = self.bannerAdUnitID
         
@@ -148,24 +137,36 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         self.bannerView.delegate = self
 
         self.bannerView.rootViewController = self
-        
-        
-        let frame = { () -> CGRect in
-            if #available(iOS 11.0, *) {
-                return view.frame.inset(by: view.safeAreaInsets)
-            } else {
-                return view.frame
-            }
-        }()
-        let viewWidth = frame.size.width
-
-        let adSize = GADCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(viewWidth)
-        self.bannerView.adSize = adSize
-
-        self.bannerView.frame = CGRect(origin: .zero, size: adSize.size)
-        
+  
         self.bannerView.load(GADRequest())
-        
+
+    }
+    
+    
+    func addBannerViewToView(_ bannerView: GADBannerView) {
+      bannerView.translatesAutoresizingMaskIntoConstraints = false
+      view.addSubview(bannerView)
+      if #available(iOS 11.0, *) {
+        positionBannerViewFullWidthAtBottomOfSafeArea(bannerView)
+      }
+      else {
+        positionBannerViewFullWidthAtBottomOfView(bannerView)
+      }
+    }
+
+    // MARK: - view positioning
+    @available (iOS 11, *)
+    func positionBannerViewFullWidthAtBottomOfSafeArea(_ bannerView: UIView) {
+      let guide = view.safeAreaLayoutGuide
+      NSLayoutConstraint.activate([
+        guide.leftAnchor.constraint(equalTo: bannerView.leftAnchor),
+        guide.rightAnchor.constraint(equalTo: bannerView.rightAnchor),
+        guide.bottomAnchor.constraint(equalTo: bannerView.bottomAnchor)
+      ])
+    }
+
+    func positionBannerViewFullWidthAtBottomOfView(_ bannerView: UIView) {
+        bannerView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), excludingEdge: .top)
     }
     
 }
@@ -179,11 +180,9 @@ extension WKWebView {
 
 extension ViewController: GADBannerViewDelegate {
     func adViewDidReceiveAd(_ bannerView: GADBannerView) {
-        // Add banner to view and add constraints as above.
 
-        if let banner = self.bannerContainer {
-            banner.addSubview(self.bannerView)
-        }
+        self.addBannerViewToView(bannerView)
+        
         bannerView.alpha = 0
         UIView.animate(withDuration: 1, animations: {
           bannerView.alpha = 1
