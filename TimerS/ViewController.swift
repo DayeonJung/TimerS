@@ -57,9 +57,9 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         
         self.setIndicator()
 
-        self.setBannerView()
         
         self.setWebView()
+        self.setBannerView()
 
         
         self.interstitial = createAndLoadInterstitial()
@@ -102,12 +102,10 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         config.userContentController = contentController
         
         self.webView = WKWebView(frame: self.view.frame, configuration: config)
-        if let webView = self.webView, let banner = self.bannerContainer {
+        if let webView = self.webView {
             self.view.addSubview(webView)
-            webView.autoPinEdge(toSuperviewSafeArea: .top)
-            webView.autoPinEdge(toSuperviewSafeArea: .left)
-            webView.autoPinEdge(toSuperviewSafeArea: .right)
-            webView.autoPinEdge(.bottom, to: .top, of: banner)
+
+            webView.autoPinEdgesToSuperviewEdges()
 
             webView.navigationDelegate = self
             webView.uiDelegate = self
@@ -132,10 +130,11 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         self.bannerContainer = UIView(forAutoLayout: ())
         if let bannerContainer = self.bannerContainer {
             self.view.addSubview(bannerContainer)
-            bannerContainer.autoPinEdge(toSuperviewMargin: .bottom)
-            bannerContainer.autoPinEdge(toSuperviewMargin: .right)
-            bannerContainer.autoPinEdge(toSuperviewMargin: .left)
+            
+            bannerContainer.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), excludingEdge: .top)
             bannerContainer.autoSetDimension(.height, toSize: 50)
+
+            
         }
         
         self.bannerView = GADBannerView(adSize: kGADAdSizeBanner)
@@ -160,9 +159,10 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         }()
         let viewWidth = frame.size.width
 
-        self.bannerView.adSize = GADCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(viewWidth)
+        let adSize = GADCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(viewWidth)
+        self.bannerView.adSize = adSize
 
-        
+        self.bannerView.frame = CGRect(origin: .zero, size: adSize.size)
         
         self.bannerView.load(GADRequest())
         
