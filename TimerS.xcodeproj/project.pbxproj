@@ -11,6 +11,11 @@
 		B43467A4243A189800E08B72 /* alert.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B43467A3243A189800E08B72 /* alert.mp3 */; };
 		B463C71524254EF1000A643F /* HamburgerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B463C71424254EF1000A643F /* HamburgerViewController.swift */; };
 		B4C2484E24239A36007EE951 /* NBButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C2484D24239A36007EE951 /* NBButton.swift */; };
+		B4FAEA6B2446C93700BA1DA9 /* SetWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FAEA6A2446C93700BA1DA9 /* SetWebView.swift */; };
+		B4FAEA6D2446C9A200BA1DA9 /* ScriptHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FAEA6C2446C9A200BA1DA9 /* ScriptHandler.swift */; };
+		B4FAEA702446CAF000BA1DA9 /* EffectKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FAEA6F2446CAF000BA1DA9 /* EffectKeys.swift */; };
+		B4FAEA722446CD8D00BA1DA9 /* SetBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FAEA712446CD8D00BA1DA9 /* SetBanner.swift */; };
+		B4FAEA742446CE8400BA1DA9 /* SetInterstitial.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FAEA732446CE8400BA1DA9 /* SetInterstitial.swift */; };
 		B4FBA504240B9BAD008A3B25 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B4FBA503240B9BAD008A3B25 /* GoogleService-Info.plist */; };
 		B4FCE7E523E9A19000E834E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FCE7E423E9A19000E834E3 /* AppDelegate.swift */; };
 		B4FCE7E923E9A19000E834E3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FCE7E823E9A19000E834E3 /* ViewController.swift */; };
@@ -28,6 +33,11 @@
 		B463C71424254EF1000A643F /* HamburgerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HamburgerViewController.swift; sourceTree = "<group>"; };
 		B471B90C240BAA68004B78E9 /* TimerS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TimerS.entitlements; sourceTree = "<group>"; };
 		B4C2484D24239A36007EE951 /* NBButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NBButton.swift; sourceTree = "<group>"; };
+		B4FAEA6A2446C93700BA1DA9 /* SetWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetWebView.swift; sourceTree = "<group>"; };
+		B4FAEA6C2446C9A200BA1DA9 /* ScriptHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptHandler.swift; sourceTree = "<group>"; };
+		B4FAEA6F2446CAF000BA1DA9 /* EffectKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectKeys.swift; sourceTree = "<group>"; };
+		B4FAEA712446CD8D00BA1DA9 /* SetBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetBanner.swift; sourceTree = "<group>"; };
+		B4FAEA732446CE8400BA1DA9 /* SetInterstitial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetInterstitial.swift; sourceTree = "<group>"; };
 		B4FBA503240B9BAD008A3B25 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B4FCE7E123E9A19000E834E3 /* TimerS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimerS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4FCE7E423E9A19000E834E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -62,6 +72,35 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		B4FAEA682446C82900BA1DA9 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				B4C2484D24239A36007EE951 /* NBButton.swift */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
+		B4FAEA692446C8FE00BA1DA9 /* WebView */ = {
+			isa = PBXGroup;
+			children = (
+				B4FAEA6F2446CAF000BA1DA9 /* EffectKeys.swift */,
+				B4FCE7E823E9A19000E834E3 /* ViewController.swift */,
+				B4FAEA6C2446C9A200BA1DA9 /* ScriptHandler.swift */,
+				B4FAEA6A2446C93700BA1DA9 /* SetWebView.swift */,
+				B4FAEA712446CD8D00BA1DA9 /* SetBanner.swift */,
+				B4FAEA732446CE8400BA1DA9 /* SetInterstitial.swift */,
+			);
+			path = WebView;
+			sourceTree = "<group>";
+		};
+		B4FAEA6E2446CA5600BA1DA9 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				B463C71424254EF1000A643F /* HamburgerViewController.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
 		B4FCE7D823E9A19000E834E3 = {
 			isa = PBXGroup;
 			children = (
@@ -84,11 +123,11 @@
 			isa = PBXGroup;
 			children = (
 				B471B90C240BAA68004B78E9 /* TimerS.entitlements */,
-				B4C2484D24239A36007EE951 /* NBButton.swift */,
 				B4FCE7E423E9A19000E834E3 /* AppDelegate.swift */,
-				B4FCE7E823E9A19000E834E3 /* ViewController.swift */,
+				B4FAEA682446C82900BA1DA9 /* Custom */,
+				B4FAEA692446C8FE00BA1DA9 /* WebView */,
+				B4FAEA6E2446CA5600BA1DA9 /* Setting */,
 				B4FD51DE2425F39F008966A9 /* MainViewController.swift */,
-				B463C71424254EF1000A643F /* HamburgerViewController.swift */,
 				B4FCE7EA23E9A19000E834E3 /* Main.storyboard */,
 				B4FCE7F023E9A19100E834E3 /* Assets.xcassets */,
 				B4FCE7F223E9A19100E834E3 /* LaunchScreen.storyboard */,
@@ -226,10 +265,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				B463C71524254EF1000A643F /* HamburgerViewController.swift in Sources */,
+				B4FAEA6D2446C9A200BA1DA9 /* ScriptHandler.swift in Sources */,
+				B4FAEA742446CE8400BA1DA9 /* SetInterstitial.swift in Sources */,
 				B4C2484E24239A36007EE951 /* NBButton.swift in Sources */,
 				B4FCE7E923E9A19000E834E3 /* ViewController.swift in Sources */,
 				B4FD51DF2425F39F008966A9 /* MainViewController.swift in Sources */,
 				B4FCE7E523E9A19000E834E3 /* AppDelegate.swift in Sources */,
+				B4FAEA702446CAF000BA1DA9 /* EffectKeys.swift in Sources */,
+				B4FAEA722446CD8D00BA1DA9 /* SetBanner.swift in Sources */,
+				B4FAEA6B2446C93700BA1DA9 /* SetWebView.swift in Sources */,
 				B4FCE7EF23E9A19000E834E3 /* TimerS.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
