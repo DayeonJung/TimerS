@@ -6,7 +6,7 @@
 //  Copyright © 2020 Dayeon Jung. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import WebKit
 import GoogleMobileAds
 
@@ -15,6 +15,8 @@ extension ViewController {
     func setBannerView() {
         
         self.bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+        self.bannerView.translatesAutoresizingMaskIntoConstraints = false
+        self.bannerView.tag = 100
         self.bannerView.adUnitID = self.bannerAdUnitID
         #if DEBUG
         self.bannerView.adUnitID = self.testBannerID
@@ -32,15 +34,17 @@ extension ViewController {
 extension ViewController: GADBannerViewDelegate {
     
     func adViewDidReceiveAd(_ bannerView: GADBannerView) {
+        
+        if self.view.viewWithTag(100) == nil {
+            view.addSubview(self.bannerView)
+            self.bannerView.autoSetDimensions(to: CGSize(width: 320, height: 50))
+            self.bannerView.autoPinEdge(toSuperviewEdge: .bottom)
+            self.bannerView.autoAlignAxis(toSuperviewAxis: .vertical)
+        }
 
-        view.addSubview(bannerView)
-        bannerView.autoSetDimensions(to: CGSize(width: 320, height: 50))
-        bannerView.autoPinEdge(toSuperviewEdge: .bottom)
-        bannerView.autoAlignAxis(toSuperviewAxis: .vertical)
-
-        bannerView.alpha = 0
+        self.bannerView.alpha = 0
         UIView.animate(withDuration: 1, animations: {
-          bannerView.alpha = 1
+          self.bannerView.alpha = 1
         })
     }
 
