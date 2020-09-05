@@ -35,7 +35,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     var webView: WKWebView?
 
 //    let urlString: String = "http://127.0.0.1:3000/"
-    let urlString: String = "https://aws-amplify.d1qy0aio3e63ai.amplifyapp.com/"
+    let urlString: String = "https://master.d1qy0aio3e63ai.amplifyapp.com/"
 
     
     let interAdUnitID: String = "ca-app-pub-8670640792248384/9329416028"
