@@ -98,8 +98,8 @@ class NBButton: UIButton {
     
     // MARK: - UI Setup
     private func setupUI() {
+        addTarget(self, action: #selector(clickAction(button:)), for: .touchUpInside)
         updateUI()
-        
     }
     
 
@@ -107,15 +107,12 @@ class NBButton: UIButton {
     
     // MARK: - Update UI
     private func updateUI() {
-        addTarget(self, action: #selector(clickAction(button:)), for: .touchUpInside)
         layer.cornerRadius = cornerRadius
         layer.borderWidth = borderWidth
         layer.borderColor = borderColor?.cgColor ?? tintColor.cgColor
         layer.shadowRadius = self.shadowRadius / 2.0
         layer.shadowOpacity = self.shadowOpacity
         layer.shadowColor = self.shadowColor?.cgColor
-        
-
         
         if self.shadowSpread == 0 {
             layer.shadowPath = nil
@@ -153,7 +150,7 @@ class NBButton: UIButton {
     }
     override public func layoutSubviews() {
         super.layoutSubviews()
-         updateUI()
+        updateUI()
         updatePoints()
         updateLocations()
         updateColors()
