@@ -13,7 +13,7 @@
 		B4C2484E24239A36007EE951 /* NBButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C2484D24239A36007EE951 /* NBButton.swift */; };
 		B4FAEA6B2446C93700BA1DA9 /* SetWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FAEA6A2446C93700BA1DA9 /* SetWebView.swift */; };
 		B4FAEA6D2446C9A200BA1DA9 /* ScriptHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FAEA6C2446C9A200BA1DA9 /* ScriptHandler.swift */; };
-		B4FAEA702446CAF000BA1DA9 /* EffectKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FAEA6F2446CAF000BA1DA9 /* EffectKeys.swift */; };
+		B4FAEA702446CAF000BA1DA9 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FAEA6F2446CAF000BA1DA9 /* Enums.swift */; };
 		B4FAEA722446CD8D00BA1DA9 /* SetBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FAEA712446CD8D00BA1DA9 /* SetBanner.swift */; };
 		B4FAEA742446CE8400BA1DA9 /* SetInterstitial.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FAEA732446CE8400BA1DA9 /* SetInterstitial.swift */; };
 		B4FBA504240B9BAD008A3B25 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B4FBA503240B9BAD008A3B25 /* GoogleService-Info.plist */; };
@@ -35,7 +35,7 @@
 		B4C2484D24239A36007EE951 /* NBButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NBButton.swift; sourceTree = "<group>"; };
 		B4FAEA6A2446C93700BA1DA9 /* SetWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetWebView.swift; sourceTree = "<group>"; };
 		B4FAEA6C2446C9A200BA1DA9 /* ScriptHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptHandler.swift; sourceTree = "<group>"; };
-		B4FAEA6F2446CAF000BA1DA9 /* EffectKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectKeys.swift; sourceTree = "<group>"; };
+		B4FAEA6F2446CAF000BA1DA9 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		B4FAEA712446CD8D00BA1DA9 /* SetBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetBanner.swift; sourceTree = "<group>"; };
 		B4FAEA732446CE8400BA1DA9 /* SetInterstitial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetInterstitial.swift; sourceTree = "<group>"; };
 		B4FBA503240B9BAD008A3B25 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -83,7 +83,7 @@
 		B4FAEA692446C8FE00BA1DA9 /* WebView */ = {
 			isa = PBXGroup;
 			children = (
-				B4FAEA6F2446CAF000BA1DA9 /* EffectKeys.swift */,
+				B4FAEA6F2446CAF000BA1DA9 /* Enums.swift */,
 				B4FCE7E823E9A19000E834E3 /* ViewController.swift */,
 				B4FAEA6C2446C9A200BA1DA9 /* ScriptHandler.swift */,
 				B4FAEA6A2446C93700BA1DA9 /* SetWebView.swift */,
@@ -271,7 +271,7 @@
 				B4FCE7E923E9A19000E834E3 /* ViewController.swift in Sources */,
 				B4FD51DF2425F39F008966A9 /* MainViewController.swift in Sources */,
 				B4FCE7E523E9A19000E834E3 /* AppDelegate.swift in Sources */,
-				B4FAEA702446CAF000BA1DA9 /* EffectKeys.swift in Sources */,
+				B4FAEA702446CAF000BA1DA9 /* Enums.swift in Sources */,
 				B4FAEA722446CD8D00BA1DA9 /* SetBanner.swift in Sources */,
 				B4FAEA6B2446C93700BA1DA9 /* SetWebView.swift in Sources */,
 				B4FCE7EF23E9A19000E834E3 /* TimerS.xcdatamodeld in Sources */,
