@@ -17,9 +17,9 @@ extension ViewController {
         self.bannerView = GADBannerView(adSize: kGADAdSizeBanner)
         self.bannerView.translatesAutoresizingMaskIntoConstraints = false
         self.bannerView.tag = 100
-        self.bannerView.adUnitID = self.bannerAdUnitID
+        self.bannerView.adUnitID = AdId.Banner.rawValue
         #if DEBUG
-        self.bannerView.adUnitID = self.testBannerID
+        self.bannerView.adUnitID = AdId.TestBanner.rawValue
         #endif
         
         self.bannerView.delegate = self

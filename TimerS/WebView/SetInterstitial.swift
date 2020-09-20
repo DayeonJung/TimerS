@@ -16,10 +16,10 @@ extension ViewController {
     
     func createAndLoadInterstitial() -> GADInterstitial {
     
-        var id = self.interAdUnitID
+        var id = AdId.Inter.rawValue
         
         #if DEBUG
-        id = self.testInterID
+        id = AdId.TestInter.rawValue
         #endif
         
         let interstitial = GADInterstitial(adUnitID: id)

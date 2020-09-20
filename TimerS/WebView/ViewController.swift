@@ -37,13 +37,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     var webView: WKWebView?
 
 //    let urlString: String = "http://127.0.0.1:3000/"
-    let urlString: String = "https://master.d1qy0aio3e63ai.amplifyapp.com/"
-
-    
-    let interAdUnitID: String = "ca-app-pub-8670640792248384/9329416028"
-    let testInterID: String = "ca-app-pub-3940256099942544/4411468910"
-    let bannerAdUnitID: String = "ca-app-pub-8670640792248384/2832937234"
-    let testBannerID: String = "ca-app-pub-3940256099942544/2934735716"
+    private let urlString: String = "https://master.d1qy0aio3e63ai.amplifyapp.com/"
 
     var indicator: UIActivityIndicatorView?
     
@@ -51,10 +45,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
 
     var alertSound: AVAudioPlayer?
 
-    let serviceUUID: CBUUID = CBUUID(string: "6135D146-0D7A-4395-A6CF-6C5B50B830F9")
-//    lazy var service: CBMutableService = {
-//        return CBMutableService(type: self.serviceUUID, primary: true)
-//    }()
+    private let serviceUUID: CBUUID = CBUUID(string: "6135D146-0D7A-4395-A6CF-6C5B50B830F9")
     
     var peripheral: CBPeripheralManager!
     var central: CBCentralManager!
