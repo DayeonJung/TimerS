@@ -34,7 +34,7 @@ extension ViewController {
             webView.allowsLinkPreview = false
             webView.configuration.preferences.javaScriptEnabled = true
             
-            webView.load(URLRequest(url: URL(string: self.urlString)!))
+            webView.load(URLRequest(url: URL(string: urlString)!))
         }
     }
     
