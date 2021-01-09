@@ -22,8 +22,6 @@
 	<string>ca-app-pub-8670640792248384~7346897313</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Our app uses bluetooth to find, connect and transfer data between different device</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
