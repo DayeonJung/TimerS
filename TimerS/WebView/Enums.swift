@@ -8,9 +8,8 @@
 
 import Foundation
 
-//public let urlString: String = "http://127.0.0.1:3000/"
-public let urlString: String = "https://master.d1qy0aio3e63ai.amplifyapp.com/"
-
+//public let urlString: String = "http://172.30.1.22:3000/"
+public let urlString: String = "https://master.dswliudyffftx.amplifyapp.com/"
 
 enum UserDefaultKey: String {
     case sound = "soundSwitchState"
