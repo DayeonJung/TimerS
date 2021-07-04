@@ -48,11 +48,11 @@ extension ViewController: WKUIDelegate, WKScriptMessageHandler {
                         
         } else if message.name == Handler.hamburger.rawValue {
             
-            sideMenuController?.showLeftView(animated: true, completionHandler: nil)
+            sideMenuController?.showLeftView(animated: true, completion: { })
             
         } else if message.name == Handler.interstitial.rawValue {
             
-            if self.interstitial.isReady {
+            if self.interstitial != nil {
                 self.interstitial.present(fromRootViewController: self)
             } else {
               print("Ad wasn't ready")

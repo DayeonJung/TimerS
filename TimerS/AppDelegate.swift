@@ -11,6 +11,8 @@ import CoreData
 import Firebase
 import GoogleMobileAds
 import LGSideMenuController
+import AppTrackingTransparency
+import AdSupport
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
@@ -21,15 +23,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        FirebaseApp.configure()
+        self.setGoogleAds()
+        self.setFCM(application)
+        self.setWindow()
         
-        Messaging.messaging().delegate = self
-        
-        Messaging.messaging().isAutoInitEnabled = true
-        
+        return true
+    }
+    
+    private func setGoogleAds() {
         GADMobileAds.sharedInstance().start(completionHandler: nil)
-
-        
+    }
+    
+    private func setFCM(_ application: UIApplication) {
+        FirebaseApp.configure()
+        Messaging.messaging().delegate = self
+        Messaging.messaging().isAutoInitEnabled = true
+            
         if #available(iOS 10.0, *) {
           // For iOS 10 display notification (sent via APNS)
           UNUserNotificationCenter.current().delegate = self
@@ -37,7 +46,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
           let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
           UNUserNotificationCenter.current().requestAuthorization(
             options: authOptions,
-            completionHandler: {_, _ in })
+            completionHandler: { _, _ in
+                self.setRequestTrackingAuth()
+            })
+            
         } else {
           let settings: UIUserNotificationSettings =
           UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
@@ -46,7 +58,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
         application.registerForRemoteNotifications()
 
-        
+    }
+    
+    private func setRequestTrackingAuth() {
+        if #available(iOS 14, *) {
+            ATTrackingManager.requestTrackingAuthorization { status in
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+    }
+
+    private func setWindow() {
         let viewController = ViewController()
         let navigationController = UINavigationController(rootViewController: viewController)
         navigationController.setNavigationBarHidden(true, animated: false)
@@ -56,15 +79,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         mainViewController.setup()
         
         window?.rootViewController = mainViewController
-
+        
         UIView.transition(with: window ?? UIWindow(), duration: 0.3, options: [.transitionCrossDissolve], animations: nil, completion: nil)
 
-        
-        return true
     }
-
     
-    func application(application: UIApplication,
+    private func application(application: UIApplication,
                      didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         Messaging.messaging().apnsToken = deviceToken as Data
     }
@@ -76,10 +96,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
       
-        
         print("asdasdasdasdasasdad")
-        
-        
         
     }
     
@@ -90,18 +107,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         
-        print("Firebase registration token: \(fcmToken)")
+        print("Firebase registration token: \(String(describing: fcmToken))")
 
-      let dataDict: [String: String] = ["token": fcmToken]
+      let dataDict: [String: String] = ["token": fcmToken ?? ""]
       
-      NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
+      NotificationCenter.default.post(name: Notification.Name("FCMToken"),
+                                      object: nil,
+                                      userInfo: dataDict)
     }
     
-    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
-      print("[Log] didReceive :", messaging)
-    }
 
 
     // MARK: - Core Data stack

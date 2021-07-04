@@ -32,9 +32,8 @@ extension ViewController {
 
 
 extension ViewController: GADBannerViewDelegate {
-    
-    func adViewDidReceiveAd(_ bannerView: GADBannerView) {
-        
+
+    func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
         if self.view.viewWithTag(100) == nil {
             view.addSubview(self.bannerView)
             self.bannerView.autoSetDimensions(to: CGSize(width: 320, height: 50))
@@ -47,5 +46,4 @@ extension ViewController: GADBannerViewDelegate {
           self.bannerView.alpha = 1
         })
     }
-
 }

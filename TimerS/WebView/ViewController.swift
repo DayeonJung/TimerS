@@ -37,7 +37,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
 
     var indicator: UIActivityIndicatorView?
     
-    var interstitial: GADInterstitial!
+    var interstitial: GADInterstitialAd!
 
     var alertSound: AVAudioPlayer?
 
@@ -51,7 +51,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         
         self.setBannerView()
 
-        self.interstitial = createAndLoadInterstitial()
+        self.setInterstitial()
         
     }
     

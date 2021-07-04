@@ -14,26 +14,43 @@ import GoogleMobileAds
 
 extension ViewController {
     
-    func createAndLoadInterstitial() -> GADInterstitial {
-    
+    func setInterstitial() {
+        
         var id = AdId.Inter.rawValue
         
         #if DEBUG
         id = AdId.TestInter.rawValue
         #endif
-        
-        let interstitial = GADInterstitial(adUnitID: id)
-        interstitial.delegate = self
-        interstitial.load(GADRequest())
-        return interstitial
+                
+        let request = GADRequest()
+        GADInterstitialAd.load(withAdUnitID: id,
+                               request: request) { ad, error in
+            if let error = error {
+                print("Failed to load interstitial ad with error: \(error.localizedDescription)")
+                return
+            }
+            self.interstitial = ad
+            self.interstitial?.fullScreenContentDelegate = self
+        }
     }
     
 }
 
-extension ViewController: GADInterstitialDelegate {
+extension ViewController: GADFullScreenContentDelegate {
     
-    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
-      self.interstitial = createAndLoadInterstitial()
+    /// Tells the delegate that the ad failed to present full screen content.
+    func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
+        print("Ad did fail to present full screen content.")
+    }
+    
+    /// Tells the delegate that the ad presented full screen content.
+    func adDidPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        print("Ad did present full screen content.")
+    }
+    
+    /// Tells the delegate that the ad dismissed full screen content.
+    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        print("Ad did dismiss full screen content.")
     }
     
 }
